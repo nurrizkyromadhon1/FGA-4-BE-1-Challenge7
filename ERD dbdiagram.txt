@@ -1,0 +1,36 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id integer [primary key]  
+  email varchar
+  password varchar
+}
+
+Table profiles {
+  id integer [primary key]
+  userId integer [ref: - users.id]
+  identity_type varchar
+  identity_number varchar
+  address varchar    
+}
+
+Table bank_accounts {
+  id integer [primary key]  
+  user_id integer  
+  bank_name varchar  
+  bank_account_number integer  
+  balance integer  
+}
+
+Table transaction {
+  id integer [primary key]
+  source_account_id integer
+  destination_account_id integer  
+  amount integer  
+}
+
+Ref: users.id < bank_accounts.user_id
+
+Ref: bank_accounts.user_id < transaction.source_account_id
+Ref: bank_accounts.user_id < transaction.destination_account_id
